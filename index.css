@@ -1,82 +1,169 @@
-/* HTML va Body teglari uchun asosiy sozlamalar */
-html {
-    font-size: 16px;
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap');
 
-*, *::before, *::after {
-    box-sizing: inherit;
+* {
     margin: 0;
     padding: 0;
-}
-
-body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Forma va uning ichidagi elementlar dizayni */
-form {
-    background: #ffffff;
-    padding: 40px 30px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
+body {
+    background: #f4f7f6;
+    min-height: 100vh;
+    color: #333;
+}
+
+.header {
+    background: #667eea;
+    color: white;
+    padding: 15px 40px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.header_list {
+    list-style: none;
+    display: flex;
     gap: 20px;
 }
 
-form h1 {
-    text-align: center;
-    color: #333333;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-/* Inputlar dizayni */
-input {
-    padding: 14px 16px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 15px;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-input:focus {
-    border-color: #667eea;
-    box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
-}
-
-/* Yuborish tugmasi */
-.sendLogin {
-    background: #667eea;
-    color: white;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
+.header_list li {
     cursor: pointer;
-    transition: background 0.3s ease;
+    font-size: 16px;
+    transition: color 0.3s;
 }
 
-.sendLogin:hover {
-    background: #5563c1;
+.header_list li:hover {
+    color: #ffd700;
 }
-.loading_open{
-    width: 100;
-    height: 100vh;
+
+.actions {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 15px;
 }
-.loading{
-    display: name;
+
+.search_product {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    font-size: 15px;
+    width: 250px;
+}
+
+.logout {
+    background: #ff4757;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.logout:hover {
+    background: #ff6b81;
+}
+
+/* Loading */
+.loading_open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.loading {
+    display: none;
+}
+
+.loading_title {
+    color: #667eea;
+    font-size: 24px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* Products Container */
+#container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Product Card */
+.product-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    background: #f9f9f9;
+    padding: 10px;
+}
+
+.product-card .body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-card h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.product-card strong {
+    font-size: 20px;
+    color: #2ed573;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.product-card p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    flex-grow: 1;
 }

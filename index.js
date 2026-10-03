@@ -1,50 +1,54 @@
-let box = document.querySelector("#container")
-let inpSearch = document.querySelector(".search_product")
-let logOut = document.querySelector(".logout")
-let loading = document.querySelector(".loading")
-loading.className = "loading_open"
+let box = document.querySelector("#container");
+let inpSearch = document.querySelector(".search_product");
+let logOut = document.querySelector(".logout");
+let loading = document.querySelector(".loading_open");
 
-fetch(('https://dummyjson.com/products'))
-.then(res=>res.json())
-.then(data=>{
-getData(data.products); 
-loading.className = "loading"
-
-});
-function getData(item){
-  box.innarHTML = ""
-  let natija = item || []
-natija.map(i=>{
-    let yangiKarobka = document.createElement("div")
-    yangiKarobka.innerHTML  = `    <image src="${i.thumbnail}" alt="">
-    <div class ="body">
-      <h1>${i.title}</h1>
-      <strong>${i.price}</strong> 
-      <p>${i.description}</p> 
-     </div>`
-     console.log(yangiKarobka);
-     box.appendChild(yangiKarobka)
-
-
-     
-   })
+// Check if user is logged in
+let savedUser = localStorage.getItem("savedUser");
+if (!savedUser) {
+    window.location.href = "./login.html";
 }
-inpSearch.addEventListener("keyup",(r)=>{
-  loading.className = "loading_open"
+
+fetch('https://dummyjson.com/products')
+    .then(res => res.json())
+    .then(data => {
+        getData(data.products); 
+        loading.className = "loading";
+    });
+
+function getData(item){
+    box.innerHTML = "";
+    let natija = item || [];
+    natija.forEach(i => {
+        let yangiKarobka = document.createElement("div");
+        yangiKarobka.className = "product-card";
+        yangiKarobka.innerHTML = `
+            <img src="${i.thumbnail}" alt="${i.title}">
+            <div class="body">
+                <h1>${i.title}</h1>
+                <strong>$${i.price}</strong> 
+                <p>${i.description.substring(0, 80)}...</p> 
+            </div>
+        `;
+        box.appendChild(yangiKarobka);
+    });
+}
+
+inpSearch.addEventListener("keyup", (r) => {
+    loading.className = "loading_open";
+    box.innerHTML = "";
   
-fetch(`httlps://dummyjson.com/products/search?q=${r.target.value}`)
-.then(res=>res.json())
-.then(data=>{
-  getData(data.products);
-  
-loading.className = "loading"
+    fetch(`https://dummyjson.com/products/search?q=${r.target.value}`)
+        .then(res => res.json())
+        .then(data => {
+            getData(data.products);
+            loading.className = "loading";
+        });
+});
 
-})
-
-
-})
-logOut.addEventListener("click",()=>{
-  setTimeout(()=>{
-    window.location.href = "./login.html"
-  },2000)
-})
+logOut.addEventListener("click", () => {
+    localStorage.removeItem("savedUser");
+    setTimeout(() => {
+        window.location.href = "./login.html";
+    }, 500);
+});
